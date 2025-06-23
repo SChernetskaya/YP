@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Доходы{% endblock %}
+
+{% block content %}
+<h2>Доходы</h2>
+
+<form method="POST">
+    <label for="category_id">Категория</label>
+    <select name="category_id" required>
+        <option value="" disabled selected>Выберите категорию</option>
+        {% for category in categories %}
+            <option value="{{ category.Id }}">{{ category.Name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="amount">Сумма</label>
+    <input type="text" name="amount" placeholder="Введите сумму" required />
+
+    <label for="date">Дата</label>
+    <input type="date" name="date" required />
+
+    <label for="note">Примечание</label>
+    <textarea name="note" rows="2" placeholder="Комментарий (необязательно)"></textarea>
+
+    <br><br>
+    <button type="submit">Добавить доход</button>
+</form>
+
+<hr style="margin: 30px 0; border-color: #f48fb1;" />
+
+<h3>История доходов</h3>
+{% if incomes %}
+<table style="width: 100%; border-collapse: collapse; color: #f8bbd0;">
+    <thead>
+        <tr style="border-bottom: 1px solid #f48fb1;">
+            <th style="padding: 8px; text-align: left;">Категория</th>
+            <th style="padding: 8px; text-align: right;">Сумма</th>
+            <th style="padding: 8px; text-align: center;">Дата</th>
+            <th style="padding: 8px; text-align: left;">Примечание</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for income in incomes %}
+        <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 8px;">{{ income.category.Name }}</td>
+            <td style="padding: 8px; text-align: right;">{{ income.Amount }}</td>
+            <td style="padding: 8px; text-align: center;">{{ income.Date.strftime('%Y-%m-%d') }}</td>
+            <td style="padding: 8px;">{{ income.Note or '-' }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Пока нет доходов.</p>
+{% endif %}
+{% endblock %}

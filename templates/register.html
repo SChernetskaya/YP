@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<h2>Регистрация</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <label for="username">{{ form.username.label.text }}</label>
+    {{ form.username(class="") }}
+
+    <label for="email">{{ form.email.label.text }}</label>
+    {{ form.email(class="") }}
+
+    <label for="password">{{ form.password.label.text }}</label>
+    {{ form.password(class="") }}
+
+    <label for="confirm_password">{{ form.confirm_password.label.text }}</label>
+    {{ form.confirm_password(class="") }}
+
+    <br><br>
+    {{ form.submit(class="") }}
+</form>
+
+<p style="text-align:center; margin-top:15px;">
+    Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
+</p>
+{% endblock %}

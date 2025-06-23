@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Счета{% endblock %}
+
+{% block content %}
+<h2>Счета</h2>
+
+<form method="POST">
+    <label for="name">Название счета</label>
+    <input type="text" name="name" placeholder="Введите название" required />
+
+    <label for="balance">Баланс</label>
+    <input type="text" name="balance" placeholder="Введите баланс (по умолчанию 0)" />
+
+    <br><br>
+    <button type="submit">Создать счет</button>
+</form>
+
+<hr style="margin: 30px 0; border-color: #f48fb1;" />
+
+<h3>Ваши счета</h3>
+{% if accounts %}
+<ul style="list-style: none; padding-left: 0;">
+    {% for account in accounts %}
+    <li style="padding: 10px 0; border-bottom: 1px solid #333;">
+        <strong>{{ account.Name }}</strong> — Баланс: {{ account.Balance }}
+        <br><small>Создан: {{ account.CreatedAt.strftime('%Y-%m-%d') }}</small>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Счета не созданы.</p>
+{% endif %}
+{% endblock %}

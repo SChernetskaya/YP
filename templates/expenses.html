@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Расходы{% endblock %}
+
+{% block content %}
+<h2>Добавить расход</h2>
+<form method="post">
+    <label for="category_id">Категория</label>
+    <select name="category_id" id="category_id" required>
+        <option value="">-- Выберите категорию --</option>
+        {% for category in categories %}
+            <option value="{{ category.Id }}">{{ category.Name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="amount">Сумма</label>
+    <input type="text" id="amount" name="amount" placeholder="Введите сумму" required>
+
+    <label for="date">Дата</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="note">Заметка</label>
+    <textarea id="note" name="note" placeholder="Дополнительные комментарии" rows="2"></textarea>
+
+    <button type="submit">Добавить расход</button>
+</form>
+
+<h2>История расходов</h2>
+{% if expenses %}
+    <ul>
+        {% for expense in expenses %}
+            <li>
+                {{ expense.Date.strftime('%Y-%m-%d') }} — 
+                {{ expense.Amount }} ₽ — 
+                {{ expense.category.Name }} — 
+                {{ expense.Note or '-' }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Расходы не найдены.</p>
+{% endif %}
+{% endblock %}

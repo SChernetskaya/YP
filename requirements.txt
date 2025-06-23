@@ -1,0 +1,9 @@
+Flask
+Flask-WTF
+Flask-Login
+Flask-SQLAlchemy
+SQLAlchemy
+Werkzeug
+WTForms
+matplotlib
+email_validator

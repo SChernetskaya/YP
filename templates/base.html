@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Моё приложение{% endblock %}</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #f8bbd0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+        }
+        a {
+            color: #f48fb1;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        header, footer {
+            background-color: #1a1a1a;
+            padding: 10px 20px;
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+        }
+        main {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .flash-message.success {
+            background-color: #adffb8;
+            color: #1b5e20;
+        }
+        .flash-message.error {
+            background-color: #f48fb1;
+            color: #330014;
+        }
+        button, input[type=submit] {
+            background-color: #f48fb1;
+            border: none;
+            color: #121212;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover, input[type=submit]:hover {
+            background-color: #f06292;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #f48fb1;
+            background-color: #2c2c2c;
+            color: #f8bbd0;
+            font-size: 1em;
+        }
+        input::placeholder {
+            color: #f48fb1aa;
+        }
+        h2 {
+            color: #f48fb1;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        nav a {
+            margin: 0 15px;
+            font-weight: 600;
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <nav>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('index') }}">Главная</a>
+                <a href="{{ url_for('income') }}">Доходы</a>
+                <a href="{{ url_for('account') }}">Счета</a>
+                <a href="{{ url_for('budget') }}">Бюджеты</a>
+                <a href="{{ url_for('expenses') }}">Расходы</a>
+                <a href="{{ url_for('logout') }}">Выйти</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Войти</a>
+                <a href="{{ url_for('register') }}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+     Ваш финансовый трекер - CashFlow.
+    </footer>
+</body>
+</html>
